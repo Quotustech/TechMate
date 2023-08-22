@@ -3,6 +3,16 @@ const router = express.Router();
 
 const userController = require('../controller/userController')
 const chatController = require('../controller/chatController')
+const authController = require('../controller/authController')
+
+
+//  Register user
+router.post('/register',authController.Register)
+
+// login
+router.post('/login',authController.Login)
+
+
 // Create user
 router.post('/createuser',userController.createUser)
 

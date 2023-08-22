@@ -2,7 +2,7 @@
 const Chat = require('../model/chatModel');
 const User = require('../model/userModel');
 const axios = require('axios')
-const apiKey = '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';
+const apiKey = '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';
 
 
 

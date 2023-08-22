@@ -31,9 +31,6 @@ function Home() {
   };
 
 
-
-
-
   useEffect(() => {
     setInputValue(transcript);
   }, [transcript])
@@ -50,7 +47,7 @@ function Home() {
     }
     else {
       setIsListenung(false)
-      axios.post(url, { message: inputValue })
+      axios.post(url, { message: inputValue, userId:'64e4504fbaccdd7f23bb7d29' })
         .then((res) => {
           setResponceData(res.data)
           console.log("the responce data------", res.data)
