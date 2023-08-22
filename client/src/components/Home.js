@@ -50,7 +50,7 @@ function Home() {
       axios.post(url, { message: inputValue, userId:'64e4504fbaccdd7f23bb7d29' })
         .then((res) => {
           setResponceData(res.data)
-          console.log("the responce data------", res.data)
+          console.log("the responce data------", res.data.question)
           setInputValue('')
         })
         .catch((error) => {
