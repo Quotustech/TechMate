@@ -4,6 +4,7 @@ const router = express.Router();
 const userController = require('../controller/userController')
 const chatController = require('../controller/chatController')
 const authController = require('../controller/authController')
+const authCheck = require('../middleware/authMiddleware')
 
 
 //  Register user
@@ -30,7 +31,7 @@ router.get('/users/:id', userController.getUserById);
 
 
 // Create chat
-router.post('/chat',chatController.sendMessageToChatGPT)
+router.post('/chat',authCheck.authCheck,chatController.sendMessageToChatGPT)
 
 
 
