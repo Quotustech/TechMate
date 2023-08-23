@@ -1,12 +1,11 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Home from './Home'
-
+import React from "react";
+import { Link } from "react-router-dom";
+// import Home from "./Home";
 
 function Layout() {
   return (
     <>
-    {/* <nav class="bg-white p-1">
+      {/* <nav class="bg-white p-1">
   <div class="mx-auto  px-2  ">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -48,10 +47,9 @@ function Layout() {
 
  
 </nav> */}
-<Home/>
-
+      {/* <Home/> */}
     </>
-  )
-};
+  );
+}
 
-export default Layout
+export default Layout;
