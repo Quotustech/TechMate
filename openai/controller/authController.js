@@ -19,11 +19,12 @@ const Register = async (req, res) => {
 
         const newUser = new User({ name, email: email, password: hashedPassword });
         const savedUser = await newUser.save();
+        console.log(res)
         return res.status(201).json({ savedUser, message: 'User registered successfully' });
     }
     catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+        console.log(error);
+        return res.status(500).json({ message: error._message });
     }
 
 };
@@ -48,7 +49,8 @@ const Login = async (req, res) => {
 
         // Generate a JWT token
         const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
-        return res.status(200).json({ token });
+        console.log(res)
+        return res.status(200).json({ token, message: 'User login successfully' });
 
     }
     catch (error) {
