@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -6,19 +6,33 @@ import image from "../assets/login.jpg";
 
 const Login = () => {
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const authToken = localStorage.getItem("authToken");
+    if (authToken) {
+      navigate("/app"); // Redirect to app page if authenticated
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/v1/auth/login", { email, password });
+      const response = await axios.post(`${apiUrl}/login`, { email, password });
+      const token = response.data.token;
+
+      // Save the token to localStorage
+      localStorage.setItem("authToken", token);
+
       toast.success("Login Successfully");
-      localStorage.setItem("authToken", true);
-      navigate("/");
+
+      // Redirect to the app page
+      navigate("/app"); // Make sure "/app" matches the correct route path
     } catch (err) {
-      if (err.response.data.error) {
+      if (err.response?.data?.error) {
         setError(err.response.data.error);
       } else if (err.message) {
         setError(err.message);
