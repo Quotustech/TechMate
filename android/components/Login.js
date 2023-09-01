@@ -11,17 +11,25 @@ import {
   Easing,
 } from 'react-native';
 
-import {useAuth} from '../auth/authContext'
+import { useAuth } from '../auth/authContext'
+import Modal from 'react-native-modal';
 
 
-const LoginScreen = ({navigation}) => {
+
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
+
   const animatedValue = new Animated.Value(0);
 
-  const {login} = useAuth();
+  const { login } = useAuth();
+  const { errors } = useAuth();
+  const { isModalVisible } = useAuth();
+  const { toggleModal } = useAuth();
+
+  console.log("the toggle in login page", errors)
 
 
   const startAnimation = () => {
@@ -56,14 +64,15 @@ const LoginScreen = ({navigation}) => {
           ]}
         />
       </View>
-     
+
       <View style={styles.formContainer}>
-      <View style={styles.welcomeText}>
+        <View style={styles.welcomeText}>
 
-        <Text style={styles.welcome}>Login to Tech Mate</Text>
+          <Text style={styles.welcome}>Login to Tech Mate</Text>
 
-      </View>
-      
+        </View>
+        
+
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -84,7 +93,7 @@ const LoginScreen = ({navigation}) => {
         <TouchableOpacity
           style={styles.loginButton}
           onPress={() => {
-            login(email,password);
+            login(email, password);
             startAnimation();
           }}
           disabled={loading}
@@ -93,15 +102,45 @@ const LoginScreen = ({navigation}) => {
             {loading ? 'Logging In...' : 'Login'}
           </Text>
         </TouchableOpacity>
+        <Modal
+          isVisible={isModalVisible}
+          animationIn="fadeIn"
+          animationOut="fadeOut"
+          backdropOpacity={0.5} // Control the transparency of the background
+          backdropColor="black" // Customize the background color
+          style={styles.modal}
+          onBackdropPress={toggleModal}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Opps !</Text>
+            {
+              errors.emailError ? (
+                <Text style={styles.modalText}>{errors.emailError}</Text>
+              ) : errors.passwordError ? (
+                <Text style={styles.modalText}>{errors.passwordError}</Text>
+              ) : errors.axiosError ? (
+                <Text style={styles.modalText}>{errors.axiosError}</Text>
+              ) : (
+                <Text style={styles.modalText}>
+                  {errors.error}
+                </Text>
+              )
+            }
+           
+            <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
         <TouchableOpacity style={styles.forgotPasswordButton}>
           <Text style={styles.forgotPasswordButtonText}>Forgot Password?</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.signupButton}
-        onPress={() => navigation.navigate('Register')} // Replace with your chat screen name
+          onPress={() => navigation.navigate('Register')} // Replace with your chat screen name
 
         >
           <Text style={styles.signupButtonText}>Don't have an account?</Text>
-          <Text style={[styles.signupButtonText,styles.signupButtonHighlight]}>Sign Up</Text>
+          <Text style={[styles.signupButtonText, styles.signupButtonHighlight]}>Sign Up</Text>
 
         </TouchableOpacity>
       </View>
@@ -125,7 +164,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   formContainer: {
-    
+
     flex: 1,
     backgroundColor: '#fff',
     borderTopLeftRadius: 30,
@@ -134,7 +173,7 @@ const styles = StyleSheet.create({
 
   },
   input: {
-    marginTop:10,
+    marginTop: 10,
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
@@ -142,12 +181,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
     fontSize: 16,
-    margin:8,
+    margin: 8,
     color: 'gray'
 
   },
   loginButton: {
-    margin:8,
+    margin: 8,
     backgroundColor: '#0bc3c8',
     padding: 15,
     borderRadius: 16,
@@ -165,39 +204,72 @@ const styles = StyleSheet.create({
     color: '#8a0003',
     fontSize: 16,
     textAlign: 'center',
-    fontWeight:'bold'
+    fontWeight: 'bold'
   },
   signupButton: {
     marginTop: 20,
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'center',
   },
   signupButtonText: {
-    marginLeft:4,
+    marginLeft: 4,
     color: 'gray',
     fontSize: 16,
-    fontWeight:'bold',
-    textAlign:'center'
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
-  signupButtonHighlight:{
+  signupButtonHighlight: {
     fontWeight: 'bold', // Make the "Sign Up" text bold
     marginLeft: 5,
-    color:'#0bc3c8'
+    color: '#0bc3c8'
   },
   welcomeText: {
     marginTop: 40,
-    flexDirection:'row',
+    flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom:16
+    marginBottom: 16
   },
   welcome: {
-    marginLeft:4,
+    marginLeft: 4,
     color: 'gray',
-    fontSize:18,
-    fontWeight:'bold',
-    textAlign:'center'
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
- 
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    color: 'gray',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalText: {
+    color: '#8f1d18',
+    fontSize: 16,
+    marginBottom: 20,
+    fontWeight: 'bold',
+
+  },
+  closeButton: {
+    backgroundColor: '#0bc3c8',
+    padding: 10,
+    borderRadius: 5,
+    alignSelf: 'flex-end',
+  },
+  closeButtonText: {
+    color: 'white',
+  },
+
+
 });
 
 export default LoginScreen;
