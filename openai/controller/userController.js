@@ -52,7 +52,6 @@ const getUserById = async (req, res) => {
       const userId = req.params.id;
       console.log(userId)
       const user = await User.findById(userId);
-      console.log("this is suriurfhiuhr===============================",user.name)
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
