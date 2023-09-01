@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import NoPage from "./components/NoPage";
@@ -10,16 +9,30 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/app" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </>
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // <Responce/>
+  // Check if the user is authenticated on app load
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  // A protected route component that redirects to login if not authenticated
+  const ProtectedRoute = ({ element, ...props }) => {
+    if (!isAuthenticated) {
+      return <Navigate to="/login" />;
+    }
+    return React.cloneElement(element, props);
+  };
+
+  return (
+    <Routes>
+      <Route path="/register" element={<Register />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/app" element={<ProtectedRoute element={<Home />} />} />
+    </Routes>
   );
 }
 

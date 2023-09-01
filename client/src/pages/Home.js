@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
 import Responce from "../components/Responce";
 import Navbar from "../components/Navbar";
+import { FiLogOut } from "react-icons/fi";
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [isListening, setIsListenung] = useState(false);
   const [responceData, setResponceData] = useState(null);
+  const navigate = useNavigate();
 
   // console.log("isListening", isListening)
   console.log("inputValue1", inputValue);
@@ -62,21 +64,39 @@ const Home = () => {
     }
   }, [listening, transcript, onSubmit, resetTranscript]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Clear the authToken from local storage
+    navigate("/login"); // Redirect to the login page
+  };
+
   return (
     <>
+      {/* <Navbar /> */}
       <div className="relative w-500 sm:w-500">
-        <Navbar />
         <img
           src="https://www.eweek.com/wp-content/uploads/2023/06/ew-what-is-ai-as-a-service.png"
           alt="Background"
           className="w-full object-cover"
         />
         <div className="absolute inset-0 bg-black opacity-90">
+          <div className="flex items-center justify-end p-5 absolute top-0 right-0">
+            <button
+              onClick={handleLogout}
+              className="text-md flex items-center space-x-1 px-3 py-1 text-black bg-red-400 rounded-md font-bold hover:bg-red-300 dark:text-gray-400 dark:hover:text-white"
+            >
+              <span>
+                <FiLogOut />
+              </span>
+              <span>Logout</span>
+            </button>
+          </div>
+
           <div className="flex justify-center mt-8">
             <div className="max-w-5xl text-center">
               <h2 className="text-5xl  font-bold font-serif text-white p-4 m-5 mt-5 ">
-                A I F T
+                TechMate
               </h2>
+
               {responceData === null ? (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-16">
@@ -225,6 +245,7 @@ const Home = () => {
                     />
                   </svg>
                 </button>
+                ;o o{" "}
               </div>
             </div>
           </div>

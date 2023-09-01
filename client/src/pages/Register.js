@@ -5,27 +5,36 @@ import axios from "axios";
 import image from "../assets/login.jpg";
 
 const Register = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await axios.post("/api/v1/auth/register", { username, email, password });
-      toast.success("User Register Successfully");
-      navigate("/app/login");
+      console.log(apiUrl, "----------");
+      await axios.post(`${apiUrl}/register`, {
+        name,
+        email,
+        password,
+      });
+      setError(""); // Clear error on successful submission
+      console.log("successfully created");
+      toast.success("User Registered Successfully");
+      setName(""); // Clear input fields
+      setEmail("");
+      setPassword("");
+      navigate("/login");
     } catch (err) {
-      if (err.response.data.error) {
+      if (err.response?.data?.error) {
         setError(err.response.data.error);
       } else if (err.message) {
         setError(err.message);
       }
-      setTimeout(() => {
-        setError("");
-      }, 5000);
     }
   };
 
@@ -56,8 +65,8 @@ const Register = () => {
                 required
                 className="w-full p-2 border-b-2 focus:outline-none focus:bg-none"
                 placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
               <input
                 type="email"
