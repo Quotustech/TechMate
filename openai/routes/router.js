@@ -33,6 +33,7 @@ router.get('/users/:id', userController.getUserById);
 // Create chat
 router.post('/chat',authCheck.authCheck,chatController.sendMessageToChatGPT)
 
+
 router.get('/allChat/:id',chatController.getChatByUser)
 
 
