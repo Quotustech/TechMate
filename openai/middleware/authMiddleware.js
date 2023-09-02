@@ -13,22 +13,24 @@ const authCheck = async (req, res, next) =>{
       }
       const tokenWithoutBearer = token.split(' ')[1];
 
-    // Use your JWT verification function to verify and decode the token
-      const decoded =  await jwt.verify(tokenWithoutBearer,secretKey)
-      // console.log("decoded data",decoded)
-      if (!decoded) {
-        return res.status(401).json({ error: 'Invalid token' });
+      try{
+
+        const decoded =  await jwt.verify(tokenWithoutBearer,secretKey)
+        if (!decoded) {
+          return res.status(401).json({ error: 'Invalid token' });
+        }
+  
+        const freshUser = await User.findById(decoded.userId)
+        if(!freshUser){
+          return res.status(401).json({ error: 'This token non belongs to this token' });
+  
+        }
+        req.user = freshUser
+        next();  
       }
-
-      const freshUser = await User.findById(decoded.userId)
-      if(!freshUser){
-        return res.status(401).json({ error: 'This token non belongs to this token' });
-
+      catch(error){
+        return res.status(401).json({ error: 'Token verification failed' });
       }
-      req.user = freshUser
-      next();
-
-    
     
 
 }
