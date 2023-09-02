@@ -11,3 +11,7 @@ node_modules/
 # Ignore node_modules in the 'android' folder
 
 ./android/node_modules/
+
+
+
+
