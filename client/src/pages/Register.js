@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import image from "../assets/login.jpg";
+import image from "../assets/ai.jpg";
 
 const Register = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -40,21 +40,11 @@ const Register = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-full md:w-3/5 flex items-center justify-center p-8">
-        <div className="bg-white p-8 ">
-          {error && (
-            <div className="mb-4">
-              <div
-                className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
-                role="alert"
-              >
-                {error}
-              </div>
-            </div>
-          )}
-          <form onSubmit={handleSubmit} className="space-y-9 ">
+      <div className="w-full md:w-2/5 flex items-center outline justify-center p-10">
+        <div className="bg-white p-10 ">
+          <form onSubmit={handleSubmit} className="space-y-9 outline">
             <div>
-              <h3 className="text-4xl  font-semibold mr-16 mb-2">
+              <h3 className="text-4xl  font-semibold mr-16 mb-2 p-2">
                 Register here
               </h3>
               <p className=" ml-2 text-gray-400">Please enter your details. </p>
