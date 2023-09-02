@@ -56,6 +56,21 @@ const sendMessageToChatGPT = async (req, res) => {
   }
 };
 
+const getChatByUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    console.log(userId);
+    const chat = await Chat.find({ user: userId }).exec();
+    if (!chat) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(chat);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   sendMessageToChatGPT,
+  getChatByUser,
 };
