@@ -1,7 +1,7 @@
 const Chat = require("../model/chatModel");
 const User = require("../model/userModel");
 const axios = require("axios");
-const apiKey = "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";
+const apiKey = "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";
 
 const sendMessageToChatGPT = async (req, res) => {
   try {
