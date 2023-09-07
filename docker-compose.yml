@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  openai:
+    container_name: openai
+    restart: unless-stopped
+    image: openai-production:1.0.0
+    build:
+      context: openai
+      target: production
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    networks:
+      - shared-network
+
+  client:
+    container_name: client
+    restart: unless-stopped
+    image: client-production:1.0.0
+    build:
+      context: client
+      target: production
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - shared-network
+    depends_on:
+      - openai
+      
+networks:
+  shared-network:
