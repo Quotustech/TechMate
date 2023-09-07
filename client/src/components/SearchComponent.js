@@ -12,31 +12,39 @@ import Swal from "sweetalert2";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-const Footer = () => {
+import Response from "./Response";
+import { useResponse } from "./ResponseContext";
+const SearchComponent = () => {
   const [inputValue, setInputValue] = useState("");
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
-  const [isListening, setIsListenung] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [responceData, setResponceData] = useState(null);
+
+  const { responseData, setResponseData } = useResponse();
 
   const handleStartListening = async () => {
     SpeechRecognition.startListening();
-    setIsListenung(true);
+    setIsListening(true);
   };
 
   const handleStopListening = () => {
     SpeechRecognition.stopListening();
     console.log("inputValue inside stop listen", inputValue);
-    setIsListenung(false);
+    setIsListening(false);
   };
   const url = "http://localhost:5000/chat";
 
   const onSubmit = () => {
     if (!inputValue) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter something.",
+      });
       console.log("Please enter something");
     } else {
       setIsLoading(true);
-      setIsListenung(false);
+      setIsListening(false);
       axios
         .post(
           url,
@@ -48,19 +56,25 @@ const Footer = () => {
           }
         )
         .then((res) => {
-          setResponceData(res.data);
+          setResponseData(res.data);
           console.log("The response data------", res.data.question);
           setInputValue("");
         })
         .catch((error) => {
           console.error("Error---:", error);
-
-          // Display an error message using SweetAlert2
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "An error occurred. Please try again later.",
-          });
+          if (error.response && error.response.status === 429) {
+            Swal.fire({
+              icon: "error",
+              title: "Too Many Requests",
+              text: "You have exceeded the request limit. Please try again later.",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "An error occurred. Please try again later.",
+            });
+          }
         })
         .finally(() => {
           setIsLoading(false); // Set isLoading to false after the API call completes
@@ -69,7 +83,7 @@ const Footer = () => {
   };
 
   return (
-    <div className=" row-span-2 h-[20vh] col-span-7  top-0">
+    <div className=" row-span-1 h-[20vh] col-span-12 top-0">
       <div className="flex justify-center items-center   mt-5 ml-20 mr-20 p-10">
         <label className="sr-only">Search</label>
         <div className="relative w-[70%]">
@@ -120,9 +134,10 @@ const Footer = () => {
             <RightArrowIcon />
           )}
         </button>
+        {/* {responseData && <Response data={responseData} />} */}
       </div>
     </div>
   );
 };
 
-export default Footer;
+export default SearchComponent;

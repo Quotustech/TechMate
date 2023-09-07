@@ -3,7 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import image from "../assets/ai.jpg";
 import { useAuth } from "../components/Auth";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
+import Swal from "sweetalert2";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -11,23 +13,18 @@ const Login = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  // const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      return navigate("/login");
-    }
-  }, []);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!email || !password) {
-      toast.error("Please enter both email and password.");
-      return;
+      setLoading(false);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Invalid Credential",
+      });
     }
     try {
       const response = await axios.post(`${apiUrl}/login`, {
@@ -35,15 +32,35 @@ const Login = () => {
         password,
       });
       const token = response.data.token;
-
-      // Save the token to localStorage
+      // console.log(response.data, "login user data");
       localStorage.setItem("authToken", token);
+      localStorage.setItem("isLoggedIn", true);
 
       auth.login(token);
-      toast.success("Login successful");
-      navigate("/app");
+      setLoading(false);
+      Swal.fire({
+        icon: "success",
+        title: "Welcome to TechMate",
+        text: "",
+      });
+      navigate("/");
     } catch (error) {
-      toast.error("Something went wrong");
+      setLoading(false);
+      if (error.response && error.response.status === 500) {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry",
+          text: "There is some issue in server.",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Invalid Credential",
+        });
+      }
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -77,9 +94,11 @@ const Login = () => {
               />
               <button
                 type="submit"
-                className="w-full bg-[#000000] text-white py-2 px-4 mt-2 rounded-md hover:bg-[#292429]"
+                disabled={loading}
+                className="w-full flex items-center justify-center bg-[#000000] text-white py-2 px-4 mt-2 rounded-md hover:bg-[#292429]"
               >
-                Log In
+                Login
+                {loading && <Loader2 className="ml-4 w-6 h-6 animate-spin" />}
               </button>
               <p className="text-center text-xs text-gray-400">
                 Don't have an account?
