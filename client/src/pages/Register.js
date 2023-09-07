@@ -40,11 +40,11 @@ const Register = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-full md:w-2/5 flex items-center outline justify-center p-10">
-        <div className="bg-white p-10 ">
-          <form onSubmit={handleSubmit} className="space-y-9 outline">
+      <div className="w-full md:w-3/5 flex items-center  justify-center p-8">
+        <div className="bg-white p-8 ">
+          <form onSubmit={handleSubmit} className="space-y-10 ">
             <div>
-              <h3 className="text-4xl  font-semibold mr-16 mb-2 p-2">
+              <h3 className="text-4xl  font-semibold mr-20 mb-2 ">
                 Register here
               </h3>
               <p className=" ml-2 text-gray-400">Please enter your details. </p>
@@ -77,7 +77,7 @@ const Register = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-[#000000] text-white py-2 px-4 rounded-md hover:bg-[#292429]"
+              className="w-full bg-[#000000] text-white py-2 px-4 mt-2 rounded-md hover:bg-[#292429]"
             >
               Sign Up
             </button>
@@ -91,7 +91,7 @@ const Register = () => {
         </div>
       </div>
 
-      <div className="hidden md:block w-3/5 h-full bg-cover bg-center relative">
+      <div className="hidden md:block w-4/5 h-full bg-cover bg-center relative">
         <img
           src={image}
           alt="register"
