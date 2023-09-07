@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import axios from "axios";
 import image from "../assets/ai.jpg";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,9 +14,15 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!name || !email || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "",
+        text: "Please fill all the inputs",
+      });
+    }
 
     try {
-      console.log(apiUrl, "----------");
       await axios.post(`${apiUrl}/register`, {
         name,
         email,
@@ -24,16 +30,28 @@ const Register = () => {
       });
       setError(""); // Clear error on successful submission
       console.log("successfully created");
-      toast.success("User Registered Successfully");
+      Swal.fire({
+        icon: "success",
+        title: "Successfully Registerd",
+        text: "",
+      });
       setName(""); // Clear input fields
       setEmail("");
       setPassword("");
       navigate("/login");
     } catch (err) {
-      if (err.response?.data?.error) {
-        setError(err.response.data.error);
-      } else if (err.message) {
-        setError(err.message);
+      if (error.response && error.response.status === 500) {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry",
+          text: "There is some issue in server.",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops",
+          text: "Something went wrong",
+        });
       }
     }
   };
@@ -82,7 +100,7 @@ const Register = () => {
               Sign Up
             </button>
             <p className=" text-center text-xs text-gray-400">
-              Already have an account?{"   "}
+              Already have an account?
               <Link to="/login" className="text-[#292429] hover:underline">
                 Please Login
               </Link>
