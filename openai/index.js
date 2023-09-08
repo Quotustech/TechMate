@@ -1,17 +1,22 @@
 // index.js
 const express = require('express');
 const bodyParser = require('body-parser');
+require('dotenv').config();
 const cors = require('cors'); //
 const app = express();
 const mongoose = require('mongoose')
-const port = 5000; // Change this to your desired port
-
+const port = process.env.PORT
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const chatRoutes = require('./routes/router');
 
-const DB = 'mongodb+srv://techquotus:quotus1234@cluster0.sewcewp.mongodb.net/techMate?retryWrites=true&w=majority'
+const DB = process.env.DATABASE_URL
+
+console.log(port)
+console.log(DB)
+
+
 mongoose.connect(DB).then(()=>{
   // seedData()
   console.log("Database connected")
