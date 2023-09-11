@@ -1,8 +1,6 @@
 import React from "react";
-
-import Response from "../components/Response";
-import { useAuth } from "../components/Auth";
-import { useResponse } from "../components/ResponseContext";
+import Response from "./Response";
+import { useResponse } from "./ResponseContext";
 
 const HomePage = () => {
   // const [responseData, setResponseData] = useState(null);
