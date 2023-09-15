@@ -84,7 +84,7 @@ const Login = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
-};
+
         // Generate a JWT token
         const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
         return res.status(200).json({ token, message: 'User login successfully' });
