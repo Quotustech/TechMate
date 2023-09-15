@@ -13,6 +13,7 @@ import {
 
 import { useAuth } from '../auth/authContext'
 import Modal from 'react-native-modal';
+import {Login} from '../api/auth'
 
 
 
@@ -24,12 +25,13 @@ const LoginScreen = ({ navigation }) => {
 
   const animatedValue = new Animated.Value(0);
 
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const { errors } = useAuth();
   const { isModalVisible } = useAuth();
   const { toggleModal } = useAuth();
 
-  console.log("the toggle in login page", errors)
+
+
 
 
   const startAnimation = () => {
@@ -42,6 +44,19 @@ const LoginScreen = ({ navigation }) => {
       useNativeDriver: false,
     }).start();
   };
+
+  const handleSubmit = () =>{
+    // startAnimation()
+    Login(email,password)
+    .then((res)=>{
+      console.log("response",res)
+      // send res use data and token to context Api
+      // navigate set as root index 0
+    })
+    .catch((error)=>{
+      // set error to error function
+    })
+  }
 
   return (
     <View style={styles.container}>
@@ -263,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0bc3c8',
     padding: 10,
     borderRadius: 5,
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
   },
   closeButtonText: {
     color: 'white',

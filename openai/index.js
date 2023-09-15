@@ -13,10 +13,6 @@ const chatRoutes = require('./routes/router');
 
 const DB = process.env.DATABASE_URL
 
-console.log(port)
-console.log(DB)
-
-
 mongoose.connect(DB).then(()=>{
   // seedData()
   console.log("Database connected")

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { createContext, useContext, useState } from 'react';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 const [isModalVisible, setModalVisible] = useState(false);
 
 
@@ -21,92 +22,79 @@ export const AuthProvider = ({ children }) => {
     error:null
   })
 
-  console.log(errors.emilError)
-
   const url = 'https://attendance-system-ebon.vercel.app/login'
 
-  const login = (email,password) => {
+  const login = async (email, password) => {
+    console.log("login fun working")
     setIsLoading(true);
-    setErrors({
-      emailError: null,
-      passwordError: null,
-      error: null,
-      axiosError:null
-  });
-
-   
-
+  
+    // Basic input validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      console.log('Please enter a validInvalid email');
       setErrors((prevErrors) => ({
         ...prevErrors,
         emailError: 'Please enter a valid email',
-    }));
-    setModalVisible(!isModalVisible);
-
+      }));
       setIsLoading(false);
       return;
-  }
-
-  // Validate password
-  if (!password || password.length < 8) {
-      console.log('Invalid password');
+    }
+  
+    if (!password || password.length < 8) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        passwordError: 'Please enter a valid Password',
-    }));
-    setModalVisible(!isModalVisible);
-
+        passwordError: 'Password length must be at least 8 characters',
+      }));
       setIsLoading(false);
       return;
-  }
+    }
+  
+    try {
+      console.log("inside the try")
 
-  if(!email || !password){
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      error: 'Email and Password must not be empty',
-  }));
-  setModalVisible(!isModalVisible);
+      const res = await axios.post(url, {
+        email,
+        password,
+      });
+  
+      if (res.data) {
+        // Assuming res.data contains user information and token
 
-    setIsLoading(false);
-    return;
+        setUser(res.data);
+        setUserToken(res.data.token);
+  
+        // Store user info and token in AsyncStorage
+        await AsyncStorage.setItem('userInfo', JSON.stringify(res.data));
+        await AsyncStorage.setItem('token', res.data.token);
 
-  }
+  
 
-    axios.post(url,{
-      email,
-      password
-    })
-    .then((res)=>{
-      setUser(res.data);
-
-      setUserToken(res.data.token)
-      AsyncStorage.setitem('userInfo',JSON.stringify(res.data))
-      AsyncStorage.setitem('token',res.data.token)
-      setModalVisible(!isModalVisible);
-
-
-    })
-    .catch((error)=>{
-      console.log(error)
+      } else {
+        // Handle the case where the response doesn't contain user data
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          axiosError: 'Invalid response data',
+        }));
+        setModalVisible(true); // Show modal for this error
+      }
+    } catch (error) {
+      console.error(error); // Log the specific error
       setErrors((prevErrors) => ({
         ...prevErrors,
         axiosError: 'Something went wrong',
-    }));
-    setModalVisible(!isModalVisible);
-
-      setIsLoading(false);
-
-    })
-
-    setIsLoading(false)
+      }));
+      setModalVisible(true); // Show modal for this error
+    }
+  
+    setIsLoading(false);
   };
+  
+  
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  const logout = () => {
+  const logout = (navigation) => {
+    console.log("logout function working")
     setIsLoading(true)
     setUserToken(null)
     AsyncStorage.removeItem('userInfo')
@@ -114,6 +102,7 @@ export const AuthProvider = ({ children }) => {
 
     setUser(null);
     setIsLoading(false)
+
 
   };
 
