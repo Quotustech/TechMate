@@ -29,7 +29,6 @@ const SearchComponent = () => {
 
   const handleStopListening = () => {
     SpeechRecognition.stopListening();
-    console.log("inputValue inside stop listen", inputValue);
     setIsListening(false);
   };
   const url = "http://localhost:5000/chat";
@@ -38,10 +37,9 @@ const SearchComponent = () => {
     if (!inputValue) {
       Swal.fire({
         icon: "error",
-        title: "Oops...",
-        text: "Please enter something.",
+        title: "Please enter something.",
+        text: "",
       });
-      console.log("Please enter something");
     } else {
       setIsLoading(true);
       setIsListening(false);
@@ -57,11 +55,9 @@ const SearchComponent = () => {
         )
         .then((res) => {
           setResponseData(res.data);
-          console.log("The response data------", res.data.question);
           setInputValue("");
         })
         .catch((error) => {
-          console.error("Error---:", error);
           if (error.response && error.response.status === 429) {
             Swal.fire({
               icon: "error",
@@ -77,7 +73,7 @@ const SearchComponent = () => {
           }
         })
         .finally(() => {
-          setIsLoading(false); // Set isLoading to false after the API call completes
+          setIsLoading(false);
         });
     }
   };
@@ -122,7 +118,7 @@ const SearchComponent = () => {
         </div>
         <button
           type="submit"
-          className="inline-flex items-center py-3 px-3 mr-30  text-sm font-medium shadow-lg text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="inline-flex items-center py-3 px-6 mr-30  text-sm font-medium shadow-lg text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={onSubmit}
           disabled={isLoading}
         >
