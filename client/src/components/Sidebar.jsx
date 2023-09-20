@@ -10,6 +10,8 @@ const Sidebar = () => {
   const [questions, setQuestions] = useState([]);
   const { userId } = useAuth();
   const { setResponseData } = useResponse();
+  const apiUrl = process.env.REACT_APP_API_URL;
+
 
   const navigate = useNavigate();
   const auth = useAuth();
@@ -17,7 +19,7 @@ const Sidebar = () => {
   useEffect(() => {
     if (userId) {
       axios
-        .get(`http://localhost:5000/allChat/${String(userId)}`)
+        .get(`${apiUrl}/allChat/${String(userId)}`)
         .then((response) => {
           setQuestions(response.data);
         })

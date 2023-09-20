@@ -19,6 +19,8 @@ const SearchComponent = () => {
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const apiUrl = process.env.REACT_APP_API_URL;
+
 
   const { responseData, setResponseData } = useResponse();
 
@@ -31,7 +33,7 @@ const SearchComponent = () => {
     SpeechRecognition.stopListening();
     setIsListening(false);
   };
-  const url = "http://localhost:5000/chat";
+  const url = `${apiUrl}/chat`;
 
   const onSubmit = () => {
     if (!inputValue) {
