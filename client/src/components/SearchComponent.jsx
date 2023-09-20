@@ -14,11 +14,14 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import Response from "./Response";
 import { useResponse } from "./ResponseContext";
+import { useAuth } from "./Auth";
 const SearchComponent = () => {
   const [inputValue, setInputValue] = useState("");
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [isListening, setIsListening] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { userId } = useAuth();
+
   const apiUrl = process.env.REACT_APP_API_URL;
 
 
@@ -48,7 +51,7 @@ const SearchComponent = () => {
       axios
         .post(
           url,
-          { message: inputValue, userId: "64e6f0ab9aad195babb4e39f" },
+          { message: inputValue, userId: userId },
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("authToken")}`,
