@@ -38,6 +38,11 @@ const SearchComponent = () => {
   };
   const url = `${apiUrl}/chat`;
 
+
+  useEffect(() => {
+    setInputValue(transcript);
+  }, [transcript])
+
   const onSubmit = () => {
     if (!inputValue) {
       Swal.fire({
@@ -82,6 +87,14 @@ const SearchComponent = () => {
         });
     }
   };
+
+  useEffect(() => {
+    if (!listening && transcript !== '') {
+      // Call the submit function when listening ends and there's a transcript
+      onSubmit();
+      resetTranscript(); // Optional: Clear the transcript if needed
+    }
+  }, [listening, transcript, onSubmit, resetTranscript]);
 
   return (
     <div className=" row-span-1 h-[20vh] col-span-12 top-0">
