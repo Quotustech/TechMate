@@ -5,7 +5,7 @@ node_modules/
 ./client/node_modules/
 
 # Ignore env in the 'client' folder
-./client/.env.development
+./client/.env.dev
 
 # Ignore node_modules in the 'openai' folder
 ./openai/node_modules/
