@@ -2,7 +2,10 @@ import React from "react";
 
 const Response = (props) => {
   const { data } = props;
-  const lines = data[1].split("\n");
+
+
+  console.log("all responce ",data)
+  const lines = data?.response.split("\n");
 
   return (
     <div className="flex flex-col lg:flex-row mt-1 mx-1 lg:mx-8 p-1 lg:p-1">
@@ -13,19 +16,19 @@ const Response = (props) => {
         <div className="max-w-screen-lg mx-auto p-4">
           <div className="bg-gray-100 rounded-lg p-4 mb-2">
             <h2 className="text-xl font-semibold items-start mb-2">
-              Q: {data[0]}
+              Q: {data?.question}
             </h2>
           </div>
           <div className="rounded-lg p-6 mb-2 bg-gray-100 max-h-96 max-w-[1000px]  overflow-y-auto">
             <div id="output">
-              {lines.map((line, index) => (
+              {/* {lines.map((line, index) => ( */}
                 <p
-                  key={index}
+                  // key={index}
                   className="flex flex-start items-start font-semibold"
                 >
-                  {line}
+                  {lines}
                 </p>
-              ))}
+               {/* ))} */}
             </div>
           </div>
         </div>
