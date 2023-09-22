@@ -67,8 +67,12 @@ const Login = () => {
     <div className="flex h-screen">
       <div className="w-full md:w-3/5 flex items-center justify-center p-8">
         <div className="bg-white p-8 ">
+        
           <form onSubmit={handleSubmit} className="space-y-9 ">
             <div>
+            <div className="p-3 mt-1 ">
+                <img src={require('./../components/images/techmatelogo.png')} alt="TechMate Logo" />
+              </div>
               <h3 className="text-4xl  font-semibold mb-4">
                 Welcome back <span>👋</span>
               </h3>

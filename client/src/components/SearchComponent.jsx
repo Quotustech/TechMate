@@ -149,7 +149,7 @@ const SearchComponent = () => {
         </div>
         <button
           type="submit"
-          className="inline-flex items-center py-3 px-6 ml-2 mr-30  text-sm font-medium shadow-lg text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="inline-flex items-center py-3 px-6 ml-2 mr-30  text-sm font-medium shadow-lg text-white bg-white rounded-lg border  hover:bg-custom-blue focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={onSubmit}
           disabled={isLoading}
         >
@@ -158,7 +158,10 @@ const SearchComponent = () => {
               <Loader2 className="w-8 h-8 animate-spin" />
             </div>
           ) : (
-            <RightArrowIcon />
+            <div className="text-gray-700">
+
+              <RightArrowIcon />
+            </div>
           )}
         </button>
         {/* {responseData && <Response data={responseData} />} */}

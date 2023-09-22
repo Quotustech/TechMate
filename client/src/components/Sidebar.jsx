@@ -57,8 +57,8 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="h-screen flex flex-col row-span-2 bg-gray-800">
-        <div className="text-white font-bold mt-2 p-2">
+      <div className="h-screen flex flex-col row-span-4 bg-custom-blue">
+        <div className="text-gray-700 font-bold mt-2 p-2">
           Previous ask questions:
         </div>
         <div className="flex-grow overflow-y-auto p-2">
@@ -67,20 +67,20 @@ const Sidebar = () => {
               {questions.map((data) => (
                 <li className="mb-2 pl-2" key={data._id}>
                   <p
-                    className="flex items-center rounded-md p-2 focus:bg-slate-700 focus:font-bold hover:bg-slate-700 transform font-semibold cursor-pointer"
+                    className="flex items-center rounded-md p-2 focus:bg-slate-100 focus:font-bold hover:bg-slate-100 transform font-semibold cursor-pointer"
                     onClick={() => handleQuestionSelect(data._id)}
                   >
-                    <span className="mr-3">
+                    <span className="mr-3 text-gray-700">
                       <MessageIcon />
                     </span>
-                    <span>{data.question}</span>
+                    <span className="text-gray-700 text-bold">{data.question}</span>
                   </p>
                 </li>
               ))}
             </ul>
           </nav>
         </div>
-        <div className="py-3  bg-slate-600 hover:bg-slate-500 flex items-center justify-center ">
+        <div className="py-3  bg-slate-500 hover:bg-purple flex items-center justify-center ">
           <button
             className="text-white text-xl flex items-center justify-center"
             onClick={handleLogout}

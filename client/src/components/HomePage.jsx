@@ -29,10 +29,10 @@ const HomePage = () => {
           </div> */}
 
           <div className="flex justify-center h-screen  mt-8 ">
-            <div className="max-w-5xl text-center ">
-              <h2 className="text-5xl  font-bold font-serif text-black p-4 m-5 mt-1 ">
-                TechMate
-              </h2>
+            <div className="max-w-5xl  ">
+              <div className="p-4 m-5 mt-1 flex justify-center items-center">
+                <img src={require('./images/techmatelogo.png')} alt="TechMate Logo" />
+              </div>
 
               {responseData === null ? (
                 <>
