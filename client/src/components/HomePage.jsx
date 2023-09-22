@@ -31,7 +31,7 @@ const HomePage = () => {
           <div className="flex justify-center h-screen  mt-8 ">
             <div className="max-w-5xl  ">
               <div className="p-4 m-5 mt-1 flex justify-center items-center">
-                <img src={require('./images/techmatelogo.png')} alt="TechMate Logo" />
+                <img src={require('./images/techmatelogo.png')} alt="TechMate logo" />
               </div>
 
               {responseData === null ? (
