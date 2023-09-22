@@ -13,8 +13,10 @@ const chatSchema = new mongoose.Schema({
   answer: {
     type: String,
     required: true,
-  },
-});
+  }
+},{
+    timestamps:true,
+  });
 
 const Chat = mongoose.model('Chat', chatSchema);
 module.exports = Chat;

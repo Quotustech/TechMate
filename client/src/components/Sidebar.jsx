@@ -12,32 +12,40 @@ const Sidebar = () => {
   const { setResponseData } = useResponse();
   const apiUrl = process.env.REACT_APP_API_URL;
 
-
   const navigate = useNavigate();
   const auth = useAuth();
+
+  const updateQuestions = (newQuestion) => {
+    setQuestions([newQuestion, ...questions]);
+  };
 
   useEffect(() => {
     if (userId) {
       axios
         .get(`${apiUrl}/allChat/${String(userId)}`)
         .then((response) => {
-          setQuestions(response.data);
+          const sortedQuestions = response.data.sort((a, b) =>
+            b.timestamp - a.timestamp
+          );
+          setQuestions(sortedQuestions);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
     }
-  }, [userId]);
+  }, [userId,questions]);
 
-  // const filteredQuestions = questions.filter(
-  //   (question) => question.user === userId
-  // );
   const handleQuestionSelect = (questionId) => {
     const selectedQuestion = questions.find(
       (question) => question._id === questionId
     );
 
-    setResponseData([selectedQuestion.question, selectedQuestion.answer]);
+    if (selectedQuestion) {
+      setResponseData({
+        question: selectedQuestion.question,
+        response: selectedQuestion.answer,
+      });
+    }
   };
 
   const handleLogout = () => {
@@ -51,7 +59,7 @@ const Sidebar = () => {
     <>
       <div className="h-screen flex flex-col row-span-2 bg-gray-800">
         <div className="text-white font-bold mt-2 p-2">
-          Previous ask questions :
+          Previous ask questions:
         </div>
         <div className="flex-grow overflow-y-auto p-2">
           <nav className="text-white flex flex-col">
