@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   CrossIcon,
   LoaderIcon,
@@ -28,6 +28,7 @@ const SearchComponent = () => {
   const { responseData, setResponseData } = useResponse();
 
   const handleStartListening = async () => {
+    console.log("listening function is working now")
     SpeechRecognition.startListening();
     setIsListening(true);
   };
@@ -42,7 +43,7 @@ const SearchComponent = () => {
     setInputValue(transcript);
   }, [transcript]);
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     if (!inputValue) {
       Swal.fire({
         icon: "error",
@@ -99,7 +100,7 @@ const SearchComponent = () => {
           setIsLoading(false);
         });
     }
-  };
+  });
 
   useEffect(() => {
     if (!listening && transcript !== "") {
