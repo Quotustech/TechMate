@@ -22,6 +22,7 @@ const SearchComponent = () => {
   const { responseData, setResponseData } = useResponse();
 
   const handleStartListening = async () => {
+    console.log("listening function is working now");
     SpeechRecognition.startListening();
     setIsListening(true);
   };
