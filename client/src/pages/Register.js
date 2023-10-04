@@ -59,6 +59,14 @@ const Register = () => {
   return (
     <div className="flex h-screen">
       <div className="w-full md:w-3/5 flex items-center  justify-center p-8">
+        <div className="absolute top-0 left-0 p-3 mt-1">
+          <img
+            className="pl-8 pt-7"
+            src={require("./../components/images/TechMate3.png")}
+            style={{ width: "200px", height: "auto" }}
+            alt="TechMate Logo"
+          />
+        </div>
         <div className="bg-white p-8 ">
           <form onSubmit={handleSubmit} className="space-y-10 ">
             <div>
@@ -99,9 +107,12 @@ const Register = () => {
             >
               Sign Up
             </button>
-            <p className=" text-center text-xs text-gray-400">
-              Already have an account?
-              <Link to="/login" className="text-[#292429] hover:underline">
+            <p className=" text-center text-base sm:text-base  text-gray-400">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-[#292429] hover:underline font-bold"
+              >
                 Please Login
               </Link>
             </p>

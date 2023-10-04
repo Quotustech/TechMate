@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import image from "../assets/ai.jpg";
 import { useAuth } from "../components/Auth";
 // import { ToastContainer, toast } from "react-toastify";
 import Swal from "sweetalert2";
-import { Loader2 } from "lucide-react";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,13 +67,17 @@ const Login = () => {
   return (
     <div className="flex h-screen">
       <div className="w-full md:w-3/5 flex items-center justify-center p-8">
+        <div className="absolute top-0 left-0 p-3 mt-1">
+          <img
+            className="pl-8 pt-7"
+            src={require("./../components/images/TechMate3.png")}
+            style={{ width: "200px", height: "auto" }}
+            alt="TechMate Logo"
+          />
+        </div>
         <div className="bg-white p-8 ">
-        
           <form onSubmit={handleSubmit} className="space-y-9 ">
             <div>
-            <div className="p-3 mt-1 ">
-                <img src={require('./../components/images/techmatelogo.png')} alt="TechMate Logo" />
-              </div>
               <h3 className="text-4xl  font-semibold mb-4">
                 Welcome back <span>👋</span>
               </h3>
@@ -87,15 +92,27 @@ const Login = () => {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                style={{
+                  "--placeholder-color": "none",
+                }}
               />
-              <input
-                type="password"
-                required
-                className="w-full p-2 border-b-2 focus:outline-none focus:bg-none"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  className="w-full p-2 border-b-2 focus:outline-none focus:bg-none"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
               <button
                 type="submit"
                 disabled={loading}
@@ -104,9 +121,12 @@ const Login = () => {
                 Login
                 {loading && <Loader2 className="ml-4 w-6 h-6 animate-spin" />}
               </button>
-              <p className="text-center text-xs text-gray-400">
-                Don't have an account?
-                <Link to="/register" className="text-[#292429] hover:underline">
+              <p className="text-center text-base sm:text-base  text-gray-400">
+                Don't have an account?{"  "}
+                <Link
+                  to="/register"
+                  className="text-[#292429] hover:underline font-bold"
+                >
                   Please Register
                 </Link>
               </p>
