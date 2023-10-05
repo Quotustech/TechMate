@@ -106,7 +106,7 @@ const SearchComponent = () => {
   }, [listening, transcript, onSubmit, resetTranscript]);
 
   return (
-    <div className="row-span-1 md:h-10  sm:h-30 col-span-12   ">
+    <div className="row-span-1 md:h-10  sm:h-30 col-span-12 sm:flex-row-reverse  ">
       <div className="flex justify-center  items-center ml-20 mr-20 p-10  sm:p-0  sm:ml-0 sm:mr-0">
         <label className="sr-only">Search</label>
         <div className="relative sm:w-[70%] lg:w-[65%]    ">
@@ -117,7 +117,7 @@ const SearchComponent = () => {
           <input
             type="text"
             id="voice-search"
-            className="bg-gray-50 border dark:bg-white  border-gray-300 text-gray-900 shadow-lg text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 pr-10 p-4  dark:text-black dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border dark:bg-white  border-gray-300 text-gray-900 shadow-lg text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 pr-10 p-4  dark:text-black  dark:placeholder-gray-400   dark:focus:border-blue-500"
             placeholder="Search"
             required
             value={inputValue}
@@ -145,7 +145,7 @@ const SearchComponent = () => {
         </div>
         <button
           type="submit"
-          className="inline-flex items-center py-3 px-6 ml-3  sm:mr-0  text-sm font-medium shadow-lg  bg-white rounded-lg border  hover:bg-blue-300 focus:ring-4 focus:outline-none transform  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 "
+          className="inline-flex items-center py-3 px-6 ml-3  sm:mr-0  text-sm font-medium shadow-lg  bg-white rounded-lg border  hover:bg-blue-300 focus:ring-4 focus:outline-none transform  dark:bg-slate-50  "
           onClick={onSubmit}
           disabled={isLoading}
         >

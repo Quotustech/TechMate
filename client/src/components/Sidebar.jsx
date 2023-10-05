@@ -70,7 +70,7 @@ const Sidebar = () => {
       <div
         className={`h-screen  flex flex-col transition row-span-4 bg-gray-800 ease-in-out duration-300 ${
           isNavShowing
-            ? "lg:w-full sm:w-[150%] sm:z-50 translate-x-0 opacity-100"
+            ? "lg:w-full sm:w-[150%] md:w-[100%] sm:z-50 translate-x-0 opacity-100"
             : "w-0 sidebar -translate-x-full"
         }`}
       >
@@ -130,12 +130,12 @@ const Sidebar = () => {
       {window.innerWidth <= 768 && (
         <div
           className={`text-black mt-3 sm:z-30 sm:relative ${
-            isNavShowing ? "ml-20 lg:ml-0" : "ml-0"
+            isNavShowing ? "ml-20  md:ml-2 lg:ml-0" : "ml-0"
           }`}
         >
           {isNavShowing ? (
             <X
-              className="cursor-pointer sm:border shadow-xl sm:ml-0 lg:hidden"
+              className="cursor-pointer sm:border shadow-xl  sm:ml-0 lg:hidden"
               size={30}
               onClick={toggleSidebar}
             />

@@ -36,7 +36,7 @@ const Response = (props) => {
 
   return (
     <div className="flex  overflow-y-hidden  ">
-      <div className="text-gray-800 sm:w-screen sm:px-2   rounded-lg  ">
+      <div className="text-gray-800 sm:w-screen sm:px-2  rounded-lg  ">
         <div className=" overflow-y-hidden overflow-x-hidden">
           <div className="bg-gray-100 rounded-lg p-4 mb-2">
             <h2 className="text-xl font-semibold items-start sm:pl-2 sm:text-base">
@@ -44,7 +44,7 @@ const Response = (props) => {
               {data.question}
             </h2>
           </div>
-          <div className="rounded-lg p-6 mb-2 bg-gray-100 max-h-[600px] max-w-[1200px] overflow-y-auto">
+          <div className="rounded-lg p-6 mb-2  bg-gray-100 max-h-[600px] max-w-[1200px] overflow-y-auto">
             <div id="output">
               {lines.map((line, index) => {
                 if (line.startsWith("```")) {

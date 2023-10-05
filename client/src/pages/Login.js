@@ -69,7 +69,7 @@ const Login = () => {
       <div className="w-full md:w-3/5 flex items-center justify-center p-8">
         <div className="absolute top-0 left-0 p-3 mt-1">
           <img
-            className="pl-8 pt-7"
+            className="pl-8 pt-7 ml-2"
             src={require("./../components/images/TechMate3.png")}
             style={{ width: "200px", height: "auto" }}
             alt="TechMate Logo"
@@ -78,10 +78,12 @@ const Login = () => {
         <div className="bg-white p-8 ">
           <form onSubmit={handleSubmit} className="space-y-9 ">
             <div>
-              <h3 className="text-4xl  font-semibold mb-4">
+              <h3 className=" sm:text-[29px] lg:text-4xl font-semibold mb-4">
                 Welcome back <span>👋</span>
               </h3>
-              <p className=" ml-2 text-gray-400">Please enter your details. </p>
+              <p className=" ml-2 lg:text-base sm:text-sm text-gray-400">
+                Please enter your details.{" "}
+              </p>
             </div>
             <div className="flex flex-col space-y-6">
               <input

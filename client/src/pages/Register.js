@@ -70,10 +70,12 @@ const Register = () => {
         <div className="bg-white p-8 ">
           <form onSubmit={handleSubmit} className="space-y-10 ">
             <div>
-              <h3 className="text-4xl  font-semibold mr-20 mb-2 ">
+              <h3 className="sm:text-[29px] lg:text-4xl font-semibold  ">
                 Register here
               </h3>
-              <p className=" ml-2 text-gray-400">Please enter your details. </p>
+              <p className=" mt-3 ml-1 lg:text-base sm:text-sm text-gray-400">
+                Please enter your details.{" "}
+              </p>
             </div>
             <div className="flex flex-col space-y-6">
               <input
@@ -111,7 +113,7 @@ const Register = () => {
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="text-[#292429] hover:underline font-bold"
+                className="text-[#292429] sm:text-base hover:underline font-bold"
               >
                 Please Login
               </Link>
