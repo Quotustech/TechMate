@@ -6,6 +6,7 @@ import { MessageIcon } from "../icons";
 import { FiLogOut } from "react-icons/fi";
 import { Loader2, Menu, X } from "lucide-react";
 import { useResponse } from "./ResponseContext";
+import Cookies from "js-cookie";
 
 const Sidebar = () => {
   const [questions, setQuestions] = useState([]);
@@ -59,8 +60,8 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("isLoggedIn");
+    Cookies.remove("authToken");
+    Cookies.remove("isLoggedIn");
     auth.logout();
     navigate("/login");
   };

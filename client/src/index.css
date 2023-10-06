@@ -30,7 +30,6 @@ input::placeholder {
 }
 
 .sidebar {
-   
     /* height: 100%; */
     overflow: hidden;
 }
@@ -38,4 +37,13 @@ input::placeholder {
 /* Hide the scrollbar */
 .sidebar::-webkit-scrollbar {
     display: none;
+}
+
+.custom-swal-height{
+    height: 300px;
+    font-size: small;
+}
+
+.custom-swal-icon{
+    font-size: 20px;
 }

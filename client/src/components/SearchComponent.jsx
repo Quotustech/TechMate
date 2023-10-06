@@ -44,6 +44,10 @@ const SearchComponent = () => {
         icon: "error",
         title: "Please enter something.",
         text: "",
+        customClass: {
+          popup: "custom-swal-height",
+        },
+        heightAuto: false,
       });
     } else {
       setIsLoading(true);
@@ -117,7 +121,7 @@ const SearchComponent = () => {
           <input
             type="text"
             id="voice-search"
-            className="bg-gray-50 border dark:bg-white  border-gray-300 text-gray-900 shadow-lg text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-12 pr-10 p-4  dark:text-black  dark:placeholder-gray-400   dark:focus:border-blue-500"
+            className="bg-gray-50 border dark:bg-white  border-gray-300 text-gray-900 shadow-lg text-sm rounded-lg  focus:border-gray-400 block w-full pl-12 pr-10 p-4  dark:text-black  dark:placeholder-gray-400 focus:outline-none  dark:focus:border-blue-500"
             placeholder="Search"
             required
             value={inputValue}
@@ -145,7 +149,7 @@ const SearchComponent = () => {
         </div>
         <button
           type="submit"
-          className="inline-flex items-center py-3 px-6 ml-3  sm:mr-0  text-sm font-medium shadow-lg  bg-white rounded-lg border  hover:bg-blue-300 focus:ring-4 focus:outline-none transform  dark:bg-slate-50  "
+          className="inline-flex items-center py-3 px-6 ml-3  sm:mr-0  text-sm font-medium shadow-lg  bg-white rounded-lg border  hover:bg-blue-200  focus:outline-none transform  dark:bg-slate-50  "
           onClick={onSubmit}
           disabled={isLoading}
         >
@@ -157,7 +161,6 @@ const SearchComponent = () => {
             <RightArrowIcon />
           )}
         </button>
-        {/* {responseData && <Response data={responseData} />} */}
       </div>
     </div>
   );

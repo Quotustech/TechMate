@@ -6,6 +6,7 @@ import { useAuth } from "../components/Auth";
 // import { ToastContainer, toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { Loader2, Eye, EyeOff } from "lucide-react";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,8 +35,12 @@ const Login = () => {
       });
       const token = response.data.token;
       // console.log(response.data, "login user data");
-      localStorage.setItem("authToken", token);
-      localStorage.setItem("isLoggedIn", true);
+      Cookies.set("authToken", token, {
+        expires: 7,
+      });
+      Cookies.set("isLoggedIn", true, {
+        expires: 7,
+      });
 
       auth.login(token);
       setLoading(false);

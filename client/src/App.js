@@ -5,10 +5,11 @@ import NoPage from "./components/NoPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { useAuth } from "./components/Auth";
+import Cookies from "js-cookie";
 
 function App() {
   const auth = useAuth();
-  const loggedIn = localStorage.getItem("isLoggedIn");
+  const loggedIn = Cookies.get("isLoggedIn");
 
   return (
     <BrowserRouter>
