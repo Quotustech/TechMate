@@ -110,7 +110,7 @@ const SearchComponent = () => {
   }, [listening, transcript, onSubmit, resetTranscript]);
 
   return (
-    <div className="row-span-1 md:h-10  sm:h-30 col-span-12 sm:flex-row-reverse  ">
+    <div className="sticky top-0 z-10 row-span-1 md:h-10  sm:h-30 col-span-12 sm:flex-row-reverse  ">
       <div className="flex justify-center  items-center ml-20 mr-20 p-10  sm:p-0  sm:ml-0 sm:mr-0">
         <label className="sr-only">Search</label>
         <div className="relative sm:w-[70%] lg:w-[65%]    ">
