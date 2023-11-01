@@ -1,13 +1,12 @@
 const Chat = require("../model/chatModel");
 const User = require("../model/userModel");
 const axios = require("axios");
-require('dotenv').config();
+require("dotenv").config();
 
 const apiKey = process.env.CHAT_GPT_API_KEY;
-const apiUrl = process.env.CHAT_GPT_URL
-console.log("api key",apiKey)
-console.log("api url",apiUrl)
-
+const apiUrl = process.env.CHAT_GPT_URL;
+console.log("api key", apiKey);
+console.log("api url", apiUrl);
 
 const sendMessageToChatGPT = async (req, res) => {
   try {
@@ -20,11 +19,12 @@ const sendMessageToChatGPT = async (req, res) => {
     const response = await axios.post(
       apiUrl,
       {
-        model: "gpt-3.5-turbo",
+        model: "ft:gpt-3.5-turbo-0613:quotus::8AFLkrWw",
         messages: [
           {
             role: "system",
-            content: "You are a helpful assistant.",
+            content:
+              "Techmate is a friendly chatbot that specializes in computer science topics and kindly declines non-technical questions",
           },
           {
             role: "user",

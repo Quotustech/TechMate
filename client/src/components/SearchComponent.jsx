@@ -9,6 +9,7 @@ import SpeechRecognition, {
 import Response from "./Response";
 import { useResponse } from "./ResponseContext";
 import { useAuth } from "./Auth";
+import Cookies from "js-cookie";
 
 const SearchComponent = () => {
   const [inputValue, setInputValue] = useState("");
@@ -58,7 +59,7 @@ const SearchComponent = () => {
           { message: inputValue, userId: userId },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+              Authorization: `Bearer ${Cookies.get("authToken")}`,
             },
           }
         )

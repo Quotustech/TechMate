@@ -8,13 +8,15 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
 
-  const token = Cookies.get("authToken");
+  const token = Cookies.get("authToken") || "Fallback Token Value";
+
   useEffect(() => {
     if (token) {
       try {
         const decodedToken = jwt_decode(token);
         if (decodedToken && decodedToken.userId) {
           const fetchedUserId = decodedToken.userId;
+
           setUserId(fetchedUserId);
         }
       } catch (error) {
