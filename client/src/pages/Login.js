@@ -125,9 +125,16 @@ const Login = () => {
                 disabled={loading}
                 className="w-full flex items-center justify-center bg-[#000000] text-white py-2 px-4 mt-2 rounded-md hover:bg-[#292429]"
               >
-                Login
-                {loading && <Loader2 className="ml-4 w-6 h-6 animate-spin" />}
+                {loading ? (
+                  <>
+                    <span className="sr-only">Loading...</span>
+                    <Loader2 className="ml-4 w-6 h-6 animate-spin" />
+                  </>
+                ) : (
+                  <>Login</>
+                )}
               </button>
+
               <p className="text-center text-base sm:text-base  text-gray-400">
                 Don't have an account?{"  "}
                 <Link

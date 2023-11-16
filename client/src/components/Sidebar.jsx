@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "./Auth";
 import { useNavigate } from "react-router-dom";
-import { MessageIcon } from "../icons";
+import { MessageIcon, PlusIcon } from "../icons";
 import { FiLogOut } from "react-icons/fi";
 import { Loader2, Menu, X } from "lucide-react";
 import { useResponse } from "./ResponseContext";
@@ -14,7 +14,7 @@ const Sidebar = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { userId } = useAuth();
-  const { setResponseData } = useResponse();
+  const { responseData, setResponseData } = useResponse();
   const navigate = useNavigate();
   const auth = useAuth();
 
@@ -42,6 +42,11 @@ const Sidebar = () => {
     }
   }, [userId, questions]);
 
+  const newChat = () => {
+    setResponseData();
+    console.log("new chat clicked");
+  };
+
   const handleQuestionSelect = (questionId) => {
     const selectedQuestion = questions.find(
       (question) => question._id === questionId
@@ -59,6 +64,21 @@ const Sidebar = () => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey && e.key === "k") {
+        e.preventDefault();
+        newChat();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const handleLogout = () => {
     Cookies.remove("authToken");
     Cookies.remove("isLoggedIn");
@@ -75,7 +95,20 @@ const Sidebar = () => {
             : "w-0 sidebar -translate-x-full"
         }`}
       >
-        <div className="text-white font-bold mt-2 p-2 sm:text-sm lg:text-lg">
+        <div className="border border-gray-600  flex justify-center items-center p-2 m-1">
+          <button
+            className="text-white font-bold my-2 gap-4 top-3 flex justify-center items-center"
+            onClick={() => newChat()}
+           
+          >
+            <span className="text-white " size={50}>
+              <PlusIcon />
+            </span>
+            New chat{" "}
+          </button>
+        </div>
+
+        <div className="text-white  font-bold mt-2 p-2 sm:text-sm lg:text-sm shadow-2xl">
           Previous ask questions:{" "}
         </div>
 

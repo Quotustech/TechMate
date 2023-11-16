@@ -27,7 +27,7 @@ const HomePage = () => {
                     <div className="p-4 bg-white border-2  rounded-lg">
                       {/* <h1 className="lg:hidden sm:block">Examples</h1> */}
                       <h2 className="text-2xl font-bold text-gray-800 ">
-                        Examples
+                        Prompts
                       </h2>
                       <p className="mt-2 text-gray-600">
                         Explain quantum computing in simple terms.
@@ -69,13 +69,14 @@ const HomePage = () => {
                       </p>
                     </div>
                   </div>
-                  <h2 className="text-xl font-serif text-gray-400 p-4 m-5 mt-2 sm:hidden  lg:block md:mt-10">
+                  <h2 className="text-xl  text-gray-500 p-4 m-5 mt-2 sm:hidden  lg:block md:mt-10">
                     At <strong>Techmate</strong>, we understand the unique
                     challenges and questions that technical and computer science
                     students face every day. That's why we've developed a
                     powerful AI system that's tailor-made to assist you in your
                     quest for knowledge and success.
                   </h2>
+                 
                 </>
               ) : (
                 <Response data={responseData} />

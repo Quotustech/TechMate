@@ -111,10 +111,13 @@ const SearchComponent = () => {
   }, [listening, transcript, onSubmit, resetTranscript]);
 
   return (
-    <div className="sticky top-0 z-10 row-span-1 md:h-10  sm:h-30 col-span-12 sm:flex-row-reverse  ">
+    <div className="sticky  z-10 row-span-1 md:h-10  sm:h-30 col-span-12 sm:flex-row-reverse  ">
+      <div className="flex justify-center text-sm  text-gray-400">
+        ctrl + k to create new chat
+      </div>
       <div className="flex justify-center  items-center ml-20 mr-20 p-10  sm:p-0  sm:ml-0 sm:mr-0">
         <label className="sr-only">Search</label>
-        <div className="relative sm:w-[70%] lg:w-[65%]    ">
+        <div className="relative sm:w-[70%] lg:w-[65%]">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <SearchIcon />
           </div>
@@ -127,8 +130,13 @@ const SearchComponent = () => {
             required
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onSubmit();
+              }
+            }}
           />
-          {isListening === false ? (
+          {/* {isListening === false ? (
             <button
               onClick={handleStartListening}
               disabled={listening}
@@ -146,7 +154,7 @@ const SearchComponent = () => {
             >
               <CrossIcon />
             </button>
-          )}
+          )} */}
         </div>
         <button
           type="submit"
