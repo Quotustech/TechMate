@@ -112,7 +112,7 @@ const SearchComponent = () => {
 
   return (
     <div className="sticky  z-10 row-span-1 md:h-10  sm:h-30 col-span-12 sm:flex-row-reverse  ">
-      <div className="flex justify-center text-sm  text-gray-400">
+      <div className="lg:flex lg:justify-center text-sm sm:hidden   text-gray-400">
         ctrl + k to create new chat
       </div>
       <div className="flex justify-center  items-center ml-20 mr-20 p-10  sm:p-0  sm:ml-0 sm:mr-0">
@@ -164,7 +164,7 @@ const SearchComponent = () => {
         >
           {isLoading ? (
             <div className="flex items-center justify-center ">
-              <Loader2 className="w-8 h-8 animate-spin" />
+              <Loader2 className="w-7 h-6 animate-spin" />
             </div>
           ) : (
             <RightArrowIcon />

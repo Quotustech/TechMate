@@ -14,7 +14,7 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-[#FFFFFF]  opacity-90">
           <div className="flex justify-center h-screen  ">
             <div className="max-w-5xl  ">
-              <div className="   lg:w-[30%] lg:ml-72 sm:w-[50%]  md:w-[35%] md:justify-center md:text-center sm:pl-1  sm:ml-20 sm:my-2  flex justify-center items-center">
+              <div className="lg:w-[28%] lg:ml-72 sm:w-[50%]  md:w-[35%] md:justify-center md:text-center sm:pl-1  sm:ml-20 sm:my-2  flex justify-center items-center">
                 <img
                   src={require("./images/TechMate3.png")}
                   alt="TechMate logo"
@@ -76,7 +76,6 @@ const HomePage = () => {
                     powerful AI system that's tailor-made to assist you in your
                     quest for knowledge and success.
                   </h2>
-                 
                 </>
               ) : (
                 <Response data={responseData} />

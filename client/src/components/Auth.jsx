@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
           setUserId(fetchedUserId);
         }
       } catch (error) {
-        console.error("Error decoding token:", error);
+        // console.error("Error decoding token:", error);
       }
     }
   }, [token]);

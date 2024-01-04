@@ -1,5 +1,6 @@
 const fs = require("fs");
 const OpenAI = require("openai");
+
 require("dotenv").config();
 
 const client = new OpenAI({

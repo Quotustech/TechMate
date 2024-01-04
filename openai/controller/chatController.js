@@ -19,7 +19,7 @@ const sendMessageToChatGPT = async (req, res) => {
     const response = await axios.post(
       apiUrl,
       {
-        model: "ft:gpt-3.5-turbo-0613:quotus::8AFLkrWw",
+        model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
