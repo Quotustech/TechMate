@@ -6,6 +6,8 @@ const chatController = require("../controller/chatController");
 const authController = require("../controller/authController");
 const authCheck = require("../middleware/authMiddleware");
 
+const organizationController = require("../controller/organizationController");
+
 //  Register user
 router.post("/register", authController.Register);
 
@@ -28,13 +30,11 @@ router.get("/users", userController.getAllUsers);
 router.get("/users/:id", userController.getUserById);
 
 // Create chat
-router.post('/chat',authCheck.authCheck,chatController.sendMessageToChatGPT)
+router.post("/chat", authCheck.authCheck, chatController.sendMessageToChatGPT);
 
+router.get("/allChat/:id", chatController.getChatByUser);
 
-router.get('/allChat/:id',chatController.getChatByUser)
-
-
-
+router.post("/organizations", organizationController.createOrganization);
 
 router.use((req, res) => {
   res.status(404).json({ error: "URL not found" });
