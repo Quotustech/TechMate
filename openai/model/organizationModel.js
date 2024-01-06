@@ -3,7 +3,7 @@ const User = require("./userModel");
 
 const organizationSchema = new mongoose.Schema(
   {
-    uniCode: {
+    orgId: {
       type: String,
       unique: true,
     },
@@ -34,16 +34,17 @@ const organizationSchema = new mongoose.Schema(
 );
 
 organizationSchema.pre("save", async function (next) {
-  if (!this.uniCode) {
+  if (!this.orgId) {
     const firstThreeLetters = this.name.substring(0, 3).toUpperCase();
     const randomNumber = Math.floor(1000000000 + Math.random() * 9000000000);
-    this.uniCode = `${firstThreeLetters}${randomNumber}`;
+    this.orgId = `${firstThreeLetters}${randomNumber}`;
   }
   const user = new User({
     name: this.name,
     email: this.email,
     password: this.password,
     role: "admin",
+    orgId: this.orgId,
   });
 
   await user.save();

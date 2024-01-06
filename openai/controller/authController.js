@@ -2,27 +2,37 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../model/userModel");
+const Organization = require("../model/organizationModel");
 
 const secretKey = "TechMateSecret";
-
 const Register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    const users = await User.find();
-    if (users.some((user) => user.email === email)) {
-      return res.status(400).json({ message: "Username already exists" });
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-    // console.log("auth token", hashedPassword)
+    const { name, email, password, orgId } = req.body;
 
-    const newUser = new User({ name, email: email, password: hashedPassword });
+    const existingOrg = await Organization.findOne({ orgId });
+    if (!existingOrg) {
+      return res.status(400).json({ message: "Invalid organization id" });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "User is  already exists" });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      orgId,
+    });
     const savedUser = await newUser.save();
-    // console.log(res)
+
     return res
       .status(201)
       .json({ savedUser, message: "User registered successfully" });
   } catch (error) {
-    // console.log(error);
     return res
       .status(500)
       .json({ error: error.errors, message: error._message });

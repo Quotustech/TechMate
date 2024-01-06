@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema(
       enum: ["superadmin", "admin", "user"],
       default: "superadmin",
     },
+    orgId: {
+      type: String,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
