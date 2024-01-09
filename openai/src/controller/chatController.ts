@@ -1,21 +1,25 @@
-const Chat = require("../model/chatModel");
-const User = require("../model/userModel");
-const axios = require("axios");
-require("dotenv").config();
+import { Request, Response } from "express";
+import Chat from "../model/chatModel";
+import User from "../model/userModel";
+import axios from "axios";
+import dotenv from "dotenv";
 
-const apiKey = process.env.CHAT_GPT_API_KEY;
-const apiUrl = process.env.CHAT_GPT_URL;
+dotenv.config();
+
+const apiKey = process.env.CHAT_GPT_API_KEY as string;
+const apiUrl = process.env.CHAT_GPT_URL as string;
 console.log("api key", apiKey);
 console.log("api url", apiUrl);
 
-const sendMessageToChatGPT = async (req, res) => {
+export const sendMessageToChatGPT = async (req: Request, res: Response) => {
   try {
     const { userId, message } = req.body;
-    // console.log(userId, message);
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
+
     const response = await axios.post(
       apiUrl,
       {
@@ -39,21 +43,20 @@ const sendMessageToChatGPT = async (req, res) => {
         },
       }
     );
-    // console.log(
-    //   "this is the responce result",
-    //   response.data.choices[0].message.content
-    // );
+
     const newChat = new Chat({
       user: userId,
       question: message,
       answer: response.data.choices[0].message.content,
     });
+
     await newChat.save();
     return res.json({
       question: message,
       response: response.data.choices[0].message.content,
     });
-  } catch (error) {
+  } catch (error: any) {
+    console.error("++++");
     res.status(error.response.status).json({
       error_code: error.code,
       error_status_code: error.response.status,
@@ -62,20 +65,15 @@ const sendMessageToChatGPT = async (req, res) => {
   }
 };
 
-const getChatByUser = async (req, res) => {
+export const getChatByUser = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id;
     const chat = await Chat.find({ user: userId }).exec();
-    if (!chat) {
-      return res.status(404).json({ error: "User not found" });
+    if (!chat || chat.length === 0) {
+      return res.status(404).json({ error: "Chat not found" });
     }
     res.json(chat);
-  } catch (error) {
+  } catch (error: any) {
     res.status(500).json({ error: "Internal server error" });
   }
-};
-
-module.exports = {
-  sendMessageToChatGPT,
-  getChatByUser,
 };

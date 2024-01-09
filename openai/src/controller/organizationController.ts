@@ -1,7 +1,8 @@
-const Organization = require("../model/organizationModel");
-const bcrypt = require("bcryptjs");
+import { Request, Response } from "express";
+import Organization from "../model/organizationModel";
+import bcrypt from "bcryptjs";
 
-const createOrganization = async (req, res) => {
+export const createOrganization = async (req: Request, res: Response) => {
   try {
     const { phoneNumber, apiKey, name, email, password } = req.body;
 
@@ -13,7 +14,9 @@ const createOrganization = async (req, res) => {
       });
     }
 
+    // Check for an existing organization with the same email
     const existingOrganization = await Organization.findOne({ email });
+
     if (existingOrganization) {
       return res.status(400).json({
         success: false,
@@ -32,15 +35,16 @@ const createOrganization = async (req, res) => {
     });
 
     await organization.save();
+
     return res.status(201).json({
       success: true,
       message: "Organization created successfully",
       organization,
     });
-  } catch (error) {
+  } catch (error: any) {
     if (error.name === "ValidationError") {
       const validationErrors = Object.values(error.errors).map(
-        (err) => err.message
+        (err: any) => err.message
       );
       return res.status(400).json({
         success: false,
@@ -48,14 +52,18 @@ const createOrganization = async (req, res) => {
         errors: validationErrors,
       });
     }
-
+    if (error.code === 11000 && error.keyValue && error.keyValue.email) {
+      // Duplicate key error
+      return res.status(400).json({
+        success: false,
+        message: "An organization with this email already exists.",
+      });
+    }
     // Generic server error
+    console.error("Internal server error:", error);
     return res.status(500).json({
       success: false,
       message: "Internal server error",
     });
   }
 };
-
-const deleteOrganization = (req, res) => {};
-module.exports = { createOrganization, deleteOrganization };

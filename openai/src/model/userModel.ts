@@ -1,7 +1,15 @@
-const mongoose = require("mongoose");
-const Organization = require("./organizationModel");
+import mongoose, { Document, Schema } from "mongoose";
 
-const userSchema = new mongoose.Schema(
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: "superadmin" | "admin" | "user";
+  orgCode?: string;
+  createdAt: Date;
+}
+
+const userSchema: Schema<IUser> = new Schema(
   {
     name: {
       type: String,
@@ -22,7 +30,7 @@ const userSchema = new mongoose.Schema(
       enum: ["superadmin", "admin", "user"],
       default: "superadmin",
     },
-    orgId: {
+    orgCode: {
       type: String,
     },
     createdAt: {
@@ -35,6 +43,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<IUser>("User", userSchema);
 
-module.exports = User;
+export default User;
